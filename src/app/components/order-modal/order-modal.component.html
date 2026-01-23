@@ -1,0 +1,36 @@
+<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+  <div class="bg-white p-8 rounded-3xl shadow-lg w-96">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-bold">Just Arrived</h2>
+      <button (click)="close.emit()" class="text-gray-500 hover:text-gray-700">&times;</button>
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-sm font-medium text-gray-700">Quantity</label>
+      <input type="number" [(ngModel)]="quantity" min="1"
+             class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 sm:text-sm">
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-sm font-medium text-gray-700">Condiments</label>
+      <div class="mt-2 flex gap-4">
+        <label class="inline-flex items-center">
+          <input type="checkbox" [(ngModel)]="condiments.ranch">
+          <span class="ml-2">Fries</span>
+        </label>
+        <label class="inline-flex items-center">
+          <input type="checkbox" [(ngModel)]="condiments.blueCheese">
+          <span class="ml-2">Wings</span>
+        </label>
+        <label class="inline-flex items-center">
+          <input type="checkbox" [(ngModel)]="condiments.bbq">
+          <span class="ml-2">Fried Pickles</span>
+        </label>
+      </div>
+    </div>
+
+    <button (click)="onSubmit()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-md">
+      Submit Order
+    </button>
+  </div>
+</div>

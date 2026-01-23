@@ -1,1 +1,42 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* Bounce animation for toasts */
+@keyframes bounceIn {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+/* Generic animated toast */
+.animated-toast-green {
+  animation: bounceIn 0.5s;
+  background: linear-gradient(135deg, #4caf50, #81c784) !important;
+  color: #fff !important;
+  border-radius: 12px !important;
+  font-weight: bold;
+}
+
+.animated-toast-orange {
+  animation: bounceIn 0.5s;
+  background: linear-gradient(135deg, #ff9800, #ffc107) !important;
+  color: #fff !important;
+  border-radius: 12px !important;
+  font-weight: bold;
+}
+
+.animated-toast-blue {
+  animation: bounceIn 0.5s;
+  background: linear-gradient(135deg, #2196f3, #64b5f6) !important;
+  color: #fff !important;
+  border-radius: 12px !important;
+  font-weight: bold;
+}
+
+.animated-toast-red {
+  animation: bounceIn 0.5s;
+  background: linear-gradient(135deg, #f44336, #e57373) !important;
+  color: #fff !important;
+  border-radius: 12px !important;
+  font-weight: bold;
+}

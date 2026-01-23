@@ -1,12 +1,24 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { ToastService, ToastMessage } from './toast.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'centralized-halo';
+  toast: Observable<ToastMessage | null>;
+
+  constructor(private toastService: ToastService) {
+    this.toast = this.toastService.toast$;
+  }
+
+  callServer() { this.toastService.show('Server has been notified! 📞', 'success'); }
+  orderWings() { this.toastService.show('Chicken just arrived! 🍗', 'justArrived'); }
+  janitor() { this.toastService.show('Janitor requested! 🧹', 'info'); }
+  emergency() { this.toastService.show('Emergency alert! ⚠️', 'error'); }
 }

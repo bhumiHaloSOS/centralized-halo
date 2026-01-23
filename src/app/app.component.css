@@ -1,0 +1,96 @@
+/* Button styling */
+.action-btn {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  border: 2px solid;
+  transition: all 0.2s;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.action-btn:hover {
+  transform: scale(0.97);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.icon-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  color: white;
+}
+
+/* Button colors */
+.blue { border-color: #93c5fd; }
+.blue .icon-circle { background-color: #3b82f6; }
+
+.orange { border-color: #fdba74; }
+.orange .icon-circle { background-color: #f97316; }
+
+.cyan { border-color: #67e8f9; }
+.cyan .icon-circle { background-color: #06b6d4; }
+
+.red { border-color: #f87171; }
+.red .icon-circle { background-color: #ef4444; }
+
+
+/* Toast container */
+.toast-container {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+}
+
+/* Toast styling */
+.toast {
+  min-width: 180px;
+  max-width: 250px;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: normal;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  animation: fadeInDown 0.3s ease-out;
+  margin-top: 0.5rem;
+  color: white;
+}
+
+.toast.success { background-color: #3b82f6; }
+.toast.info { background-color: #06b6d4; }
+.toast.error { background-color: #ef4444; }
+.toast.justArrived { 
+  background-color: #f97316;   /* orange for "Just Arrived" */ 
+  color: white;
+}
+
+@media (max-width: 640px) {
+  .action-btn {
+    padding: 1.5rem;
+    font-size: 1.1rem;
+  }
+
+  .icon-circle {
+    width: 64px;
+    height: 64px;
+    font-size: 1.6rem;
+  }
+}
+
+
+
+@keyframes fadeInDown {
+  0% { opacity: 0; transform: translateY(-20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
