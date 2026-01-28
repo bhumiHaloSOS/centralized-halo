@@ -1,0 +1,57 @@
+<div
+  class="min-h-screen flex items-center justify-center transition-colors duration-300"
+  [ngClass]="getBackground()"
+>
+  <div
+    class="flex flex-col items-center justify-center text-center
+           p-10 rounded-2xl shadow-2xl
+           w-[92vw] max-w-2xl"
+  >
+
+    <!-- HALO LOGO (IDLE) -->
+    <img
+      *ngIf="!latestCategory"
+      src="../../assets/images/halo-logo.png"
+      alt="Halo"
+      class="w-20 h-20 mb-3 select-none"
+    />
+
+
+    <!-- CATEGORY ICON (ACTIVE) -->
+    <i
+      *ngIf="latestCategory"
+      class="las text-[6rem] mb-6"
+      [ngClass]="getIcon()"
+    ></i>
+
+    <!-- MESSAGE -->
+    <h1
+      class="text-2xl md:text-2xl font-bold tracking-wide mb-2"
+      [ngClass]="latestCategory ? 'text-white' : 'text-black'"
+    >
+      {{ getMessage() }}
+    </h1>
+
+    <!-- TIME -->
+    <div
+      *ngIf="latestCategory"
+      class="text-xl opacity-90 mb-6"
+    >
+      {{ latestCategory.created_at | date:'shortTime' }}
+    </div>
+
+    <!-- TAP TO ACCEPT -->
+    <button
+      *ngIf="latestCategory"
+      (click)="acceptEntry()"
+      class="px-10 py-3 text-0.1xl rounded-full
+             bg-white text-black
+             shadow-2xl
+             active:scale-95 hover:scale-105
+             transition-all duration-200"
+    >
+      Tap to Accept
+    </button>
+
+  </div>
+</div>

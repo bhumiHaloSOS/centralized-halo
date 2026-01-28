@@ -1,7 +1,0 @@
-<div *ngIf="notification" class="bg-white p-6 rounded-3xl shadow-lg text-center">
-  <p class="text-xl font-bold mb-2">Notification: {{ notification.type | titlecase }}</p>
-  <p class="text-gray-600 mb-4">{{ notification.timestamp | date:'shortTime' }}</p>
-  <button (click)="acceptNotification()" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
-    Accept
-  </button>
-</div>
