@@ -1,4 +1,4 @@
-name: Build and deploy Node.js app to Azure Web App - therock-backend
+name: Deploy Node.js Backend to Azure Web App
 
 on:
   push:
@@ -7,31 +7,35 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
+      # Step 1: Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
 
+      # Step 3: Install dependencies
       - name: Install dependencies
+        working-directory: backend
+        run: npm install
+
+      # Step 4: Build backend (optional)
+      - name: Build backend
+        working-directory: backend
         run: |
-          cd backend
-          npm install
+          npm run build --if-present
 
-      - name: Azure Login
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Deploy Backend to Azure Web App
+      # Step 5: Deploy to Azure
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: therock-backend
-          slot-name: Production
-          package: backend
+          app-name: 'therock-backend'                     # Azure Web App name
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}  # Paste XML content here
+          package: './backend'                            # Path to backend folder
