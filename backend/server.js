@@ -8,19 +8,19 @@ const app = express();
 // Middleware
 const allowedOrigins = [
     'https://therock.halosos.com',
+    'https://brave-flower-07b47b803.6.azurestaticapps.net',
     process.env.FRONTEND_URL // production domain
 ];
 
 app.use(cors({
-  origin: (origin, callback) => {
+  origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      callback(new Error('CORS not allowed'));
     }
   },
-  methods: ['GET','POST','PUT','DELETE'],
-  allowedHeaders: ['Content-Type','Authorization']
+  credentials: true
 }));
 
 // Parse JSON bodies
