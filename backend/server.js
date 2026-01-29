@@ -38,6 +38,14 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false } // required for Azure Flexible Server
 });
 
+// pool.query('SELECT * FROM category ORDER BY id ASC')
+//   .then(res => {
+//     console.log("Rows:", res.rows);
+//   })
+//   .catch(err => {
+//     console.error("Query error:", err);
+//   });
+
 // Health check (Azure uses this)
 app.get('/', (req, res) => {
   res.send('Backend is running');
