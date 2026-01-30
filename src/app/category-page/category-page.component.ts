@@ -22,15 +22,40 @@ export class CategoryPageComponent {
   latestCategory: CategoryEntry | null = null;
   accepted = false;
 
-  constructor(private categoryApi: CategoryApiService) {}
+  private audio: HTMLAudioElement;
+  private lastEntryId: number | null = null;
+  private audioUnlocked = false;
+
+  constructor(private categoryApi: CategoryApiService) {
+    this.audio = new Audio('/assets/sounds/ding.mp3');
+    this.audio.loop = true; // keep looping
+  }
 
   ngOnInit() {
-    // Poll latest entry every 2 seconds
+    // Step 1: Unlock audio on first user interaction
+    const unlockAudio = () => {
+      this.audio.play().then(() => {
+        this.audio.pause(); // stop immediately, just unlocks
+        this.audioUnlocked = true;
+      }).catch(() => {});
+      document.removeEventListener('click', unlockAudio);
+    };
+    document.addEventListener('click', unlockAudio);
+
+    // Step 2: Poll notifications
     interval(2000)
       .pipe(switchMap(() => this.categoryApi.getLatest()))
       .subscribe(entry => {
-        this.latestCategory = entry;
-        this.accepted = false; // reset accept button when new entry comes
+        if (entry && entry.id !== this.lastEntryId) {
+          this.latestCategory = entry;
+          this.accepted = false;
+          this.lastEntryId = entry.id;
+
+          // Step 3: Play looping audio only if unlocked
+          if (this.audioUnlocked) {
+            this.playSound();
+          }
+        }
       });
   }
 
@@ -38,10 +63,27 @@ export class CategoryPageComponent {
     if (!this.latestCategory) return;
 
     this.categoryApi.accept(this.latestCategory.id).subscribe(() => {
-      this.latestCategory = null; 
+      this.accepted = true;
+      this.stopSound(); // stop looping audio
+      this.latestCategory = null;
     });
   }
 
+  private playSound() {
+    if (!this.audio) return;
+    this.audio.currentTime = 0;
+    this.audio.play().catch(() => {
+      console.warn('Audio play failed');
+    });
+  }
+
+  private stopSound() {
+    if (!this.audio) return;
+    this.audio.pause();
+    this.audio.currentTime = 0;
+  }
+
+  // UI helpers
   getBackground() {
     if (!this.latestCategory || this.accepted) return 'bg-white text-black';
     switch (this.latestCategory.category_name) {
